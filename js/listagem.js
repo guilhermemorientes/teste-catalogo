@@ -24,8 +24,8 @@ async function carregarDados() {
     dados = await res.json();
 
     ["apartamentos", "casas", "loteamentos"].forEach(tipo => {
-      const filtrado = dados.filter(d => d["Tipo"]?.toLowerCase() === tipo);
-      const bairros = [...new Set(filtrado.map(d => d["Bairro"]).filter(Boolean))];
+      const filtrado = dados.filter(d => d["TIPO"]?.toLowerCase() === tipo);
+      const bairros = [...new Set(filtrado.map(d => d["BAIRRO"]).filter(Boolean))];
 
       const select = document.getElementById(`bairro-${tipo}`);
       if (!select) return;
@@ -50,8 +50,8 @@ document.querySelectorAll(".filtros .buscar").forEach(botao => {
     const bairroSelecionado = document.getElementById(`bairro-${setor}`).value;
 
     const resultado = dados.filter(item =>
-      item["Tipo"]?.toLowerCase() === setor &&
-      (bairroSelecionado === "Bairro" || item["Bairro"] === bairroSelecionado)
+      item["TIPO"]?.toLowerCase() === setor &&
+      (bairroSelecionado === "Bairro" || item["BAIRRO"] === bairroSelecionado)
     );
 
     mostrarResultados(resultado);
@@ -77,19 +77,27 @@ function mostrarResultados(lista) {
   lista.forEach(imovel => {
     const clone = template.cloneNode(true);
 
-    const nome = imovel["Nome do Empreendimento"] || "Empreendimento";
-    const imagem = "https://i.imgur.com/uXRSpYB.png"; // fixa por enquanto
-    const tag = imovel["Tag Personalizada"] || "-";
-    const estagio = imovel["Estágio de Obra"] || "-";
-    const metragem = imovel["Metragem"] || "-";
-    const bairro = imovel["Bairro"] || "-";
-    const dormitorios = imovel["Dormitórios"] || "-";
-    const garagem = imovel["Garagem"] || "-";
-    const valor = parseFloat(imovel["Valor"] || 0).toLocaleString("pt-BR");
-    const pdf = imovel["LinkPDF"];
-    const tour = imovel["Tour Virtual"];
+    const nome = imovel["EMPREENDIMENTO"] || "Empreendimento";
+    const imagem = "https://i.imgur.com/uXRSpYB.png"; // ou usar imovel["IMAGEM"]
+    const tag = imovel["DESCRICAO"] || "-";
+    const estagio = imovel["ESTAGIO"] || "-";
+    const metragem = imovel["METRAGEM"] || "-";
+    const bairro = imovel["BAIRRO"] || "-";
+    const dormitorios = imovel["DORMITORIOS"] || "-";
 
-    const garagemTexto = garagem > 1 ? `${garagem} Garagens` : `${garagem} Garagem`;
+    // Banheiros
+    const banheiroBruto = imovel["BANHEIROS"] || "0";
+    const banheiroNum = parseInt(banheiroBruto) || 0;
+    const banheiroTexto = banheiroNum === 1 ? "1 Banheiro" : `${banheiroNum} Banheiros`;
+
+    // Garagem
+    const garagemBruta = imovel["GARAGEM"] || "0";
+    const garagemNum = parseInt(garagemBruta) || 0;
+    const garagemTexto = garagemNum > 1 ? `${garagemNum} Garagens` : `${garagemNum} Garagem`;
+
+    const valor = parseFloat(imovel["VALOR"] || 0).toLocaleString("pt-BR");
+    const pdf = imovel["PDF"];
+    const tour = imovel["TOUR"];
 
     // Preencher campos
     clone.querySelector(".insta-user").textContent = nome;
@@ -102,6 +110,7 @@ function mostrarResultados(lista) {
       <i class="fas fa-ruler-combined"></i> Metragem: ${metragem} m²<br>
       <i class="fas fa-location-dot"></i> Bairro: ${bairro}<br>
       <i class="fas fa-bed"></i> ${dormitorios} Dormitórios<br>
+      <i class="fas fa-toilet"></i> ${banheiroTexto}<br>
       <i class="fas fa-car"></i> ${garagemTexto}<br>
       <i class="fas fa-hand-holding-dollar"></i> Valor: R$ ${valor}<br>
       ${pdf ? `<a href="https://drive.google.com/uc?export=view&id=${pdf}" target="_blank">📄 PDF</a><br>` : ''}
