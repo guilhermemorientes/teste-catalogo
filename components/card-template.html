@@ -1,25 +1,44 @@
-<template id="card-template">
-  <div class="card-insta">
-    <div class="insta-header">
-      <span class="insta-user">__NOME__</span>
-      <span class="insta-follow">· Seguir</span>
-    </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Template - Imóveis</title>
 
-    <div class="insta-image">
-      <img src="__IMAGEM__" alt="Imagem do imóvel" />
-    </div>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <div class="insta-actions">
-      <i class="fas fa-heart" style="color:#e74c3c;"></i>
-      <i class="fab fa-whatsapp" style="color:#25d366;"></i>
-      <i class="fas fa-share-nodes" style="color:#3498db;"></i>
-    </div>
+  <!-- Estilo externo (o seu CSS principal deve importar esse arquivo) -->
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
 
-    <div class="insta-likes">⭐ __DORMS__ dorm · __BAIRRO__ · __ESTAGIO__</div>
+  <!-- Template para clonagem via JS -->
+  <template id="card-template">
+    <div class="card-insta">
+      <div class="insta-header">
+        <span class="insta-user">__NOME__</span>
+        <span class="insta-follow">· Seguir</span>
+      </div>
 
-    <div class="insta-caption">
-      <strong>Valor:</strong> R$ __VALOR__<br/>
-      __LINKPDF__ __TOURVIRTUAL__
+      <div class="insta-image">
+        <img src="__IMAGEM__" alt="Imagem do imóvel" />
+      </div>
+
+      <div class="insta-actions">
+        <i class="fas fa-heart" style="color:#e74c3c;"></i>
+        <i class="fab fa-whatsapp" style="color:#25d366;"></i>
+        <i class="fas fa-share-nodes" style="color:#3498db;"></i>
+      </div>
+
+      <div class="insta-likes">⭐ __DORMS__ dorm · __BAIRRO__ · __ESTAGIO__</div>
+
+      <div class="insta-caption">
+        <strong>Valor:</strong> R$ __VALOR__<br/>
+        __LINKPDF__ __TOURVIRTUAL__
+      </div>
     </div>
-  </div>
-</template>
+  </template>
+
+</body>
+</html>
