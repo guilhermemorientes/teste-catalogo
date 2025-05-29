@@ -17,7 +17,7 @@ document.querySelectorAll(".tabs button").forEach(button => {
   });
 });
 
-// Carrega os dados da planilha e popula os bairros
+// Carrega dados da planilha e popula bairros
 async function carregarDados() {
   try {
     const res = await fetch(url);
@@ -58,7 +58,7 @@ document.querySelectorAll(".filtros .buscar").forEach(botao => {
   });
 });
 
-// Renderiza os cards com base no template
+// Renderiza os cards
 function mostrarResultados(lista) {
   const container = document.querySelector(".resultados");
   container.innerHTML = "";
@@ -68,36 +68,48 @@ function mostrarResultados(lista) {
     return;
   }
 
-  const template = document.getElementById("card-template")?.innerHTML;
+  const template = document.getElementById("card-template")?.content;
   if (!template) {
     container.innerHTML = "<p>Erro ao carregar template do card.</p>";
     return;
   }
 
-lista.forEach(imovel => {
-  const imagemURL = "https://i.imgur.com/uXRSpYB.png"; // NOVA IMAGEM TESTE
+  lista.forEach(imovel => {
+    const clone = template.cloneNode(true);
 
-  const pdfLink = imovel["LinkPDF"]
-    ? `<a href="https://drive.google.com/uc?export=view&id=${imovel["LinkPDF"]}" target="_blank">📄 PDF</a>`
-    : "";
+    const nome = imovel["Nome do Empreendimento"] || "Empreendimento";
+    const imagem = "https://i.imgur.com/uXRSpYB.png"; // fixa por enquanto
+    const tag = imovel["Tag Personalizada"] || "-";
+    const estagio = imovel["Estágio de Obra"] || "-";
+    const metragem = imovel["Metragem"] || "-";
+    const bairro = imovel["Bairro"] || "-";
+    const dormitorios = imovel["Dormitórios"] || "-";
+    const garagem = imovel["Garagem"] || "-";
+    const valor = parseFloat(imovel["Valor"] || 0).toLocaleString("pt-BR");
+    const pdf = imovel["LinkPDF"];
+    const tour = imovel["Tour Virtual"];
 
-  const tourLink = imovel["Tour Virtual"]
-    ? `<a href="${imovel["Tour Virtual"]}" target="_blank">🎥 Tour Virtual</a>`
-    : "";
+    const garagemTexto = garagem > 1 ? `${garagem} Garagens` : `${garagem} Garagem`;
 
-  let html = template
-    .replace(/__NOME__/g, imovel["Nome do Empreendimento"] || "Empreendimento")
-    .replace(/__IMAGEM__/g, imagemURL)
-    .replace(/__DORMS__/g, imovel["Dormitórios"] || "-")
-    .replace(/__BAIRRO__/g, imovel["Bairro"] || "-")
-    .replace(/__ESTAGIO__/g, imovel["Estágio de Obra"] || "-")
-    .replace(/__VALOR__/g, parseFloat(imovel["Valor"] || 0).toLocaleString("pt-BR"))
-    .replace(/__LINKPDF__/g, pdfLink)
-    .replace(/__TOURVIRTUAL__/g, tourLink);
+    // Preencher campos
+    clone.querySelector(".insta-user").textContent = nome;
+    clone.querySelector(".insta-image img").src = imagem;
+    clone.querySelector(".insta-likes").textContent = `⭐ ${tag}`;
 
-  const wrapper = document.createElement("div");
-  wrapper.innerHTML = html.trim();
-  container.appendChild(wrapper.firstChild);
-});
+    const captionHTML = `
+      <p style="margin: 10px 0;"></p>
+      <i class="fas fa-calendar-alt"></i> Entrega: ${estagio}<br>
+      <i class="fas fa-ruler-combined"></i> Metragem: ${metragem} m²<br>
+      <i class="fas fa-location-dot"></i> Bairro: ${bairro}<br>
+      <i class="fas fa-bed"></i> ${dormitorios} Dormitórios<br>
+      <i class="fas fa-car"></i> ${garagemTexto}<br>
+      <i class="fas fa-hand-holding-dollar"></i> Valor: R$ ${valor}<br>
+      ${pdf ? `<a href="https://drive.google.com/uc?export=view&id=${pdf}" target="_blank">📄 PDF</a><br>` : ''}
+      ${tour ? `<a href="${tour}" target="_blank">🎥 Tour Virtual</a>` : ''}
+    `;
 
+    clone.querySelector(".insta-caption").innerHTML = captionHTML;
+
+    container.appendChild(clone);
+  });
 }
