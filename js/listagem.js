@@ -75,10 +75,8 @@ function mostrarResultados(lista) {
   }
 
   lista.forEach(imovel => {
-    const imagemID = imovel["LinkImagem"];
-    const imagemURL = imagemID
-      ? `https://drive.google.com/uc?export=view&id=${imagemID}`
-      : `https://via.placeholder.com/500x300?text=${encodeURIComponent(imovel["Nome do Empreendimento"] || "")}`;
+    // FORÇANDO IMAGEM MANUAL AQUI
+    const imagemURL = "https://drive.google.com/uc?export=view&id=1CHprbd0eeaePTbdK0TDSc05Ee0q6dHGy";
 
     const pdfLink = imovel["LinkPDF"]
       ? `<a href="https://drive.google.com/uc?export=view&id=${imovel["LinkPDF"]}" target="_blank">📄 PDF</a>`
