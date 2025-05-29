@@ -98,7 +98,6 @@ function mostrarResultados(lista) {
     const valor = parseFloat(imovel["VALOR"] || 0).toLocaleString("pt-BR");
 
     const apresentacao = imovel["APRESENTACAO"];
-    const tour = imovel["TOUR"];
 
     // Preencher campos
     clone.querySelector(".insta-user").textContent = nome;
@@ -107,15 +106,14 @@ function mostrarResultados(lista) {
 
     const captionHTML = `
       <p style="margin: 10px 0;"></p>
-      <i class="fas fa-calendar-alt"></i> Entrega: ${estagio}<br>
-      <i class="fas fa-ruler-combined"></i> Metragem: ${metragem} m²<br>
-      <i class="fas fa-location-dot"></i> Bairro: ${bairro}<br>
-      <i class="fas fa-bed"></i> ${dormitorios} Dormitórios<br>
-      <i class="fas fa-toilet"></i> ${banheiroTexto}<br>
-      <i class="fas fa-car"></i> ${garagemTexto}<br>
-      <i class="fas fa-hand-holding-dollar"></i> Valor: R$ ${valor}<br>
+      📅 Entrega: ${estagio}<br>
+      📐 Metragem: ${metragem} m²<br>
+      📍 Bairro: ${bairro}<br>
+      🛏 ${dormitorios} Dormitórios<br>
+      🚽 ${banheiroTexto}<br>
+      🚗 ${garagemTexto}<br>
+      💰 Valor: R$ ${valor}<br>
       ${apresentacao ? `<a href="https://drive.google.com/uc?export=view&id=${apresentacao}" target="_blank">📄 Apresentação</a><br>` : ''}
-      ${tour ? `<a href="${tour}" target="_blank">🎥 Tour Virtual</a>` : ''}
     `;
 
     clone.querySelector(".insta-caption").innerHTML = captionHTML;
