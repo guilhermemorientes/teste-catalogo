@@ -113,7 +113,7 @@ function mostrarResultados(lista) {
       <i class="fas fa-toilet"></i> ${banheiroTexto}<br>
       <i class="fas fa-car"></i> ${garagemTexto}<br>
       <i class="fas fa-hand-holding-dollar"></i> Valor: R$ ${valor}<br>
-      ${pdf ? `<a href="https://drive.google.com/uc?export=view&id=${pdf}" target="_blank">📄 PDF</a><br>` : ''}
+      ${pdf ? `<a href="https://drive.google.com/uc?export=view&id=${apresentacao}" target="_blank">📄 Apresentação</a><br>` : ''}
       ${tour ? `<a href="${tour}" target="_blank">🎥 Tour Virtual</a>` : ''}
     `;
 
