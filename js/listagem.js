@@ -96,7 +96,8 @@ function mostrarResultados(lista) {
     const garagemTexto = garagemNum > 1 ? `${garagemNum} Garagens` : `${garagemNum} Garagem`;
 
     const valor = parseFloat(imovel["VALOR"] || 0).toLocaleString("pt-BR");
-    const pdf = imovel["PDF"];
+
+    const apresentacao = imovel["APRESENTACAO"];
     const tour = imovel["TOUR"];
 
     // Preencher campos
@@ -113,7 +114,7 @@ function mostrarResultados(lista) {
       <i class="fas fa-toilet"></i> ${banheiroTexto}<br>
       <i class="fas fa-car"></i> ${garagemTexto}<br>
       <i class="fas fa-hand-holding-dollar"></i> Valor: R$ ${valor}<br>
-      ${pdf ? `<a href="https://drive.google.com/uc?export=view&id=${apresentacao}" target="_blank">📄 Apresentação</a><br>` : ''}
+      ${apresentacao ? `<a href="https://drive.google.com/uc?export=view&id=${apresentacao}" target="_blank">📄 Apresentação</a><br>` : ''}
       ${tour ? `<a href="${tour}" target="_blank">🎥 Tour Virtual</a>` : ''}
     `;
 
