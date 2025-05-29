@@ -74,30 +74,30 @@ function mostrarResultados(lista) {
     return;
   }
 
-  lista.forEach(imovel => {
-    // FORÇANDO IMAGEM MANUAL AQUI
-    const imagemURL = "https://drive.google.com/uc?export=view&id=1CHprbd0eeaePTbdK0TDSc05Ee0q6dHGy";
+lista.forEach(imovel => {
+  const imagemURL = "https://i.imgur.com/uXRSpYB.png"; // NOVA IMAGEM TESTE
 
-    const pdfLink = imovel["LinkPDF"]
-      ? `<a href="https://drive.google.com/uc?export=view&id=${imovel["LinkPDF"]}" target="_blank">📄 PDF</a>`
-      : "";
+  const pdfLink = imovel["LinkPDF"]
+    ? `<a href="https://drive.google.com/uc?export=view&id=${imovel["LinkPDF"]}" target="_blank">📄 PDF</a>`
+    : "";
 
-    const tourLink = imovel["Tour Virtual"]
-      ? `<a href="${imovel["Tour Virtual"]}" target="_blank">🎥 Tour Virtual</a>`
-      : "";
+  const tourLink = imovel["Tour Virtual"]
+    ? `<a href="${imovel["Tour Virtual"]}" target="_blank">🎥 Tour Virtual</a>`
+    : "";
 
-    let html = template
-      .replace(/__NOME__/g, imovel["Nome do Empreendimento"] || "Empreendimento")
-      .replace(/__IMAGEM__/g, imagemURL)
-      .replace(/__DORMS__/g, imovel["Dormitórios"] || "-")
-      .replace(/__BAIRRO__/g, imovel["Bairro"] || "-")
-      .replace(/__ESTAGIO__/g, imovel["Estágio de Obra"] || "-")
-      .replace(/__VALOR__/g, parseFloat(imovel["Valor"] || 0).toLocaleString("pt-BR"))
-      .replace(/__LINKPDF__/g, pdfLink)
-      .replace(/__TOURVIRTUAL__/g, tourLink);
+  let html = template
+    .replace(/__NOME__/g, imovel["Nome do Empreendimento"] || "Empreendimento")
+    .replace(/__IMAGEM__/g, imagemURL)
+    .replace(/__DORMS__/g, imovel["Dormitórios"] || "-")
+    .replace(/__BAIRRO__/g, imovel["Bairro"] || "-")
+    .replace(/__ESTAGIO__/g, imovel["Estágio de Obra"] || "-")
+    .replace(/__VALOR__/g, parseFloat(imovel["Valor"] || 0).toLocaleString("pt-BR"))
+    .replace(/__LINKPDF__/g, pdfLink)
+    .replace(/__TOURVIRTUAL__/g, tourLink);
 
-    const wrapper = document.createElement("div");
-    wrapper.innerHTML = html.trim();
-    container.appendChild(wrapper.firstChild);
-  });
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = html.trim();
+  container.appendChild(wrapper.firstChild);
+});
+
 }
