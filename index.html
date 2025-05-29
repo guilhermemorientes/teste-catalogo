@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listagem de Oportunidades</title>
+  <link rel="stylesheet" href="css/listagem.css" />
+</head>
+<body>
+  <!-- Título da página -->
+  <h1 id="titulo">Listagem de Oportunidades</h1>
+
+  <!-- Botões de categoria -->
+  <div class="tabs">
+    <button data-setor="apartamentos" class="active">Apartamentos</button>
+    <button data-setor="casas">Casas</button>
+    <button data-setor="loteamentos">Loteamentos</button>
+  </div>
+
+  <!-- Filtros por bairro -->
+  <div class="filtros-container">
+    <div class="filtros apartamentos">
+      <select id="bairro-apartamentos"><option>Bairro</option></select>
+      <button class="buscar">Buscar</button>
+    </div>
+
+    <div class="filtros casas hidden">
+      <select id="bairro-casas"><option>Bairro</option></select>
+      <button class="buscar">Buscar</button>
+    </div>
+
+    <div class="filtros loteamentos hidden">
+      <select id="bairro-loteamentos"><option>Bairro</option></select>
+      <button class="buscar">Buscar</button>
+    </div>
+  </div>
+
+  <!-- Container onde os cards serão renderizados -->
+  <div class="resultados"></div>
+
+  <!-- Carrega o template de card externo -->
+  <script>
+    async function carregarTemplateCard() {
+      try {
+        const res = await fetch("components/card-template.html");
+        const html = await res.text();
+        const container = document.createElement("div");
+        container.innerHTML = html;
+        document.body.appendChild(container);
+      } catch (error) {
+        console.error("Erro ao carregar o template do card:", error);
+      }
+    }
+
+    carregarTemplateCard();
+  </script>
+
+  <!-- Script principal -->
+  <script src="js/listagem.js"></script>
+</body>
+</html>
