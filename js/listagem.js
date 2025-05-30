@@ -14,12 +14,19 @@ function configurarAbas() {
     button.addEventListener("click", () => {
       const setor = button.getAttribute("data-setor");
 
-      // Ativa a aba clicada e define classe para mudar a cor
-      document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active", "apartamentos", "casas", "loteamentos"));
-      button.classList.add("active", setor);
+      // Remove classes de todos os botões
+      document.querySelectorAll(".tabs button").forEach(b => {
+        b.classList.remove("active", "apartamentos", "casas", "loteamentos");
+      });
+
+      // Ativa botão clicado com classe do setor
+      button.classList.add("active");
+      button.classList.add(setor);
+
+      // Atualiza classe no título (para mudar a cor da barra)
       titulo.className = setor;
 
-      // Mostra filtros da aba correspondente
+      // Mostra os filtros corretos
       document.querySelectorAll(".filtros").forEach(f => f.classList.add("hidden"));
       document.querySelector(`.filtros.${setor}`).classList.remove("hidden");
     });
