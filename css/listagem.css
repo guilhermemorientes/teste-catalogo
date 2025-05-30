@@ -20,22 +20,38 @@ h1.loteamentos  { color: #ffcc00; }
   gap: 1rem;
   margin-bottom: 2rem;
 }
+
 .tabs button {
+  flex: 1;
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 6px;
   background-color: #ccc;
   font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.15s ease-in-out;
+  min-width: 120px;
+  text-align: center;
 }
+
+/* Estilo de botão pressionado */
+.tabs button.active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+/* Cores por setor + ativo */
 .tabs button.apartamentos.active {
   background-color: #d7263d;
   color: #fff;
 }
+
 .tabs button.casas.active {
   background-color: #227c9d;
   color: #fff;
 }
+
 .tabs button.loteamentos.active {
   background-color: #ffcc00;
   color: #000;
@@ -159,6 +175,15 @@ h1.loteamentos  { color: #ffcc00; }
 
   .filtros select,
   .filtros .buscar {
+    width: 100%;
+  }
+
+  .tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tabs button {
     width: 100%;
   }
 }
