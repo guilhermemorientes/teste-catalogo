@@ -169,7 +169,8 @@ function mostrarResultados(lista) {
       🚻 Banheiro: ${banheiroNum}<br>
       🚙 Garagem: ${garagemNum}<br>
       🏷️ Valor: R$ ${valor}<br>
-      ${apresentacao ? `<a href="https://drive.google.com/uc?export=view&id=${apresentacao}" target="_blank">📄 Apresentação</a><br>` : ''}
+      ${apresentacao ? `<a href="${apresentacao}" target="_blank">📄 Apresentação</a><br>` : ''}
+
     `;
 
     clone.querySelector(".insta-caption").innerHTML = captionHTML;
