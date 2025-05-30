@@ -121,10 +121,12 @@ h1.loteamentos  { color: #ffcc00; }
 
 /* Resultado dos cards */
 .resultados {
-  margin-top: 30px;
+  margin: 30px auto;
+  padding: 0 20px;
+  max-width: 1400px;
   display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
 }
 
 /* Estilo dos cards tipo Instagram */
