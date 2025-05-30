@@ -20,18 +20,20 @@ h1.loteamentos  { color: #ffcc00; }
   margin-bottom: 2rem;
 }
 
-.tabs .tab-group {
+.tab-group {
   display: flex;
-  width: 600px;
-  max-width: 90vw;
+  flex-direction: row;
+  width: 100%;
+  max-width: 600px; /* mesmo valor do select + botão Buscar */
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.tabs .tab-group button {
-  flex: 1 1 33.333%;
-  padding: 0.85rem 1.5rem;
+/* Botões internos */
+.tab-group button {
+  flex: 1;
+  padding: 0.85rem 0.5rem;
   border: none;
   font-size: 1rem;
   font-weight: 600;
@@ -43,33 +45,46 @@ h1.loteamentos  { color: #ffcc00; }
   position: relative;
   top: 0;
   text-align: center;
+  min-width: 0; /* evita quebra no mobile */
 }
 
-/* Hover (subir) */
-.tabs .tab-group button:hover {
+/* Hover */
+.tab-group button:hover {
   top: -1px;
   box-shadow: 0 8px 0 #aaa;
 }
 
-/* Ativo (afundado) */
-.tabs .tab-group button.active {
+/* Pressionado */
+.tab-group button.active {
   top: 4px;
   box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4);
   color: #fff;
 }
 
 /* Cores por tipo */
-.tabs .tab-group button.apartamentos.active {
+.tab-group button.apartamentos.active {
   background-color: #d7263d;
 }
 
-.tabs .tab-group button.casas.active {
+.tab-group button.casas.active {
   background-color: #227c9d;
 }
 
-.tabs .tab-group button.loteamentos.active {
+.tab-group button.loteamentos.active {
   background-color: #ffcc00;
   color: #000;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 600px) {
+  .tab-group {
+    flex-direction: column;
+  }
+
+  .tab-group button {
+    width: 100%;
+    border-radius: 0;
+  }
 }
 
 /* Filtros */
