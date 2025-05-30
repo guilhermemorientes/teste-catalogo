@@ -23,7 +23,7 @@ h1.loteamentos  { color: #ffcc00; }
 
 .tabs button {
   flex: 1;
-  min-width: 120px;
+  min-width: 50px;
   padding: 0.85rem 1.5rem;
   border: 2px solid transparent;
   border-radius: 8px;
