@@ -9,20 +9,23 @@ const url = "https://script.google.com/macros/s/AKfycbyy3R4jCXbUcSjjC4bn-ocQwa0S
 // ================================
 // TROCA DE ABAS (Apartamentos, Casas, Loteamentos)
 // ================================
-document.querySelectorAll(".tabs button").forEach(button => {
-  button.addEventListener("click", () => {
-    const setor = button.getAttribute("data-setor");
+function configurarAbas() {
+  document.querySelectorAll(".tabs button").forEach(button => {
+    button.addEventListener("click", () => {
+      const setor = button.getAttribute("data-setor");
 
-    // Remove todas as classes e ativa a correta
-    document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active", "apartamentos", "casas", "loteamentos"));
-    button.classList.add("active", setor);
-    titulo.className = setor;
+      // Ativa a aba clicada e define classe para mudar a cor
+      document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active", "apartamentos", "casas", "loteamentos"));
+      button.classList.add("active", setor);
+      titulo.className = setor;
 
-    // Mostra o filtro correspondente
-    document.querySelectorAll(".filtros").forEach(f => f.classList.add("hidden"));
-    document.querySelector(`.filtros.${setor}`).classList.remove("hidden");
+      // Mostra filtros da aba correspondente
+      document.querySelectorAll(".filtros").forEach(f => f.classList.add("hidden"));
+      document.querySelector(`.filtros.${setor}`).classList.remove("hidden");
+    });
   });
-});
+}
+configurarAbas();
 
 // ================================
 // CARREGA DADOS DA PLANILHA E POPULA SELECTS DE BAIRROS
@@ -46,13 +49,17 @@ async function carregarDados() {
       });
     });
 
-    aplicarFiltrosDaURL(); // Aplica filtro da URL se houver
+    aplicarFiltrosDaURL(); // Aplica filtros via URL, se houver
 
-    // Se não tiver parâmetro, ativa a aba de "Apartamentos" por padrão
+    // ================================
+    // SE NÃO TIVER PARÂMETROS NA URL, ATIVA ABA "APARTAMENTOS" DIRETO
+    // ================================
     const params = new URLSearchParams(window.location.search);
     if (!params.has("setor")) {
-      const abaApartamentos = document.querySelector('.tabs button[data-setor="apartamentos"]');
-      if (abaApartamentos) abaApartamentos.click();
+      const abaPadrao = document.querySelector('.tabs button[data-setor="apartamentos"]');
+      if (abaPadrao) {
+        abaPadrao.click(); // Simula clique para ativar a aba vermelha
+      }
     }
 
   } catch (err) {
@@ -64,7 +71,7 @@ carregarDados();
 
 // ================================
 // APLICA FILTRO AUTOMÁTICO SE A URL TIVER PARÂMETROS
-// Ex: ?setor=apartamentos&bairro=Medeiros
+// Exemplo: ?setor=casas&bairro=Medeiros
 // ================================
 function aplicarFiltrosDaURL() {
   const params = new URLSearchParams(window.location.search);
@@ -74,20 +81,41 @@ function aplicarFiltrosDaURL() {
   if (setorParam && bairroParam) {
     const botaoSetor = document.querySelector(`.tabs button[data-setor="${setorParam}"]`);
     if (botaoSetor) {
-      botaoSetor.click(); // Simula clique na aba
+      botaoSetor.click(); // Ativa a aba
       const select = document.getElementById(`bairro-${setorParam}`);
       if (select) {
         select.value = bairroParam;
         const botaoBuscar = select.closest(".filtros").querySelector(".buscar");
-        if (botaoBuscar) botaoBuscar.click(); // Dispara a busca
+        if (botaoBuscar) botaoBuscar.click(); // Dispara busca
       }
     }
   }
 }
 
+// ================================
+// BUSCA FILTRADA POR SETOR E BAIRRO
+// ================================
+document.querySelectorAll(".filtros .buscar").forEach(botao => {
+  botao.addEventListener("click", () => {
+    const setor = document.querySelector(".tabs button.active").getAttribute("data-setor");
+    const bairroSelecionado = document.getElementById(`bairro-${setor}`).value;
+
+    // Atualiza a URL com os filtros escolhidos
+    const novaURL = `${window.location.pathname}?setor=${setor}&bairro=${encodeURIComponent(bairroSelecionado)}`;
+    history.pushState({}, "", novaURL);
+
+    // Aplica filtro
+    const resultado = dados.filter(item =>
+      item["TIPO"]?.toLowerCase() === setor &&
+      (bairroSelecionado === "Bairro" || item["BAIRRO"] === bairroSelecionado)
+    );
+
+    mostrarResultados(resultado);
+  });
+});
 
 // ================================
-// MONTA OS CARDS NA TELA COM OS RESULTADOS FILTRADOS
+// EXIBE OS IMÓVEIS EM FORMA DE CARDS
 // ================================
 function mostrarResultados(lista) {
   const container = document.querySelector(".resultados");
@@ -107,22 +135,20 @@ function mostrarResultados(lista) {
   lista.forEach(imovel => {
     const clone = template.cloneNode(true);
 
-    // Dados do imóvel
+    // Dados básicos do imóvel
     const nome = imovel["EMPREENDIMENTO"] || "Empreendimento";
-    const imagem = "https://i.imgur.com/uXRSpYB.png"; // Ou imovel["IMAGEM"]
+    const imagem = "https://i.imgur.com/uXRSpYB.png"; // Substitua se tiver imagem na planilha
     const tag = imovel["DESCRICAO"] || "-";
     const estagio = imovel["ESTAGIO"] || "-";
     const metragem = imovel["METRAGEM"] || "-";
     const bairro = imovel["BAIRRO"] || "-";
     const dormitorios = imovel["DORMITORIOS"] || "-";
-
     const banheiroNum = parseInt(imovel["BANHEIROS"] || "0") || 0;
     const garagemNum = parseInt(imovel["GARAGEM"] || "0") || 0;
-
     const valor = parseFloat(imovel["VALOR"] || 0).toLocaleString("pt-BR");
     const apresentacao = imovel["APRESENTACAO"];
 
-    // Preenche os campos no card
+    // Preenche card
     clone.querySelector(".insta-user").textContent = nome;
     clone.querySelector(".insta-image img").src = imagem;
     clone.querySelector(".insta-likes").textContent = `⭐ ${tag}`;
