@@ -46,7 +46,17 @@ async function carregarDados() {
       });
     });
 
-    aplicarFiltrosDaURL(); // Aplica filtros se tiver parâmetros na URL
+    aplicarFiltrosDaURL(); // Aplica filtros se houver parâmetros
+
+    // ================================
+    // ATIVA "APARTAMENTOS" POR PADRÃO SE NÃO HOUVER PARÂMETROS NA URL
+    // ================================
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has("setor")) {
+      const abaApartamentos = document.querySelector('.tabs button[data-setor="apartamentos"]');
+      if (abaApartamentos) abaApartamentos.click();
+    }
+
   } catch (err) {
     console.error("Erro ao carregar dados:", err);
   }
@@ -76,6 +86,7 @@ function aplicarFiltrosDaURL() {
     }
   }
 }
+
 
 // ================================
 // BOTÃO "BUSCAR" – FILTRA E MOSTRA OS IMÓVEIS
