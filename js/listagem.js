@@ -13,12 +13,12 @@ document.querySelectorAll(".tabs button").forEach(button => {
   button.addEventListener("click", () => {
     const setor = button.getAttribute("data-setor");
 
-    // Ativa aba selecionada
+    // Remove todas as classes e ativa a correta
     document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active", "apartamentos", "casas", "loteamentos"));
     button.classList.add("active", setor);
     titulo.className = setor;
 
-    // Exibe os filtros da aba correspondente
+    // Mostra o filtro correspondente
     document.querySelectorAll(".filtros").forEach(f => f.classList.add("hidden"));
     document.querySelector(`.filtros.${setor}`).classList.remove("hidden");
   });
@@ -46,11 +46,9 @@ async function carregarDados() {
       });
     });
 
-    aplicarFiltrosDaURL(); // Aplica filtros se houver parâmetros
+    aplicarFiltrosDaURL(); // Aplica filtro da URL se houver
 
-    // ================================
-    // ATIVA "APARTAMENTOS" POR PADRÃO SE NÃO HOUVER PARÂMETROS NA URL
-    // ================================
+    // Se não tiver parâmetro, ativa a aba de "Apartamentos" por padrão
     const params = new URLSearchParams(window.location.search);
     if (!params.has("setor")) {
       const abaApartamentos = document.querySelector('.tabs button[data-setor="apartamentos"]');
@@ -87,28 +85,6 @@ function aplicarFiltrosDaURL() {
   }
 }
 
-
-// ================================
-// BOTÃO "BUSCAR" – FILTRA E MOSTRA OS IMÓVEIS
-// ================================
-document.querySelectorAll(".filtros .buscar").forEach(botao => {
-  botao.addEventListener("click", () => {
-    const setor = document.querySelector(".tabs button.active").getAttribute("data-setor");
-    const bairroSelecionado = document.getElementById(`bairro-${setor}`).value;
-
-    // Atualiza URL com filtros aplicados
-    const novaURL = `${window.location.pathname}?setor=${setor}&bairro=${encodeURIComponent(bairroSelecionado)}`;
-    history.pushState({}, "", novaURL);
-
-    // Filtra dados
-    const resultado = dados.filter(item =>
-      item["TIPO"]?.toLowerCase() === setor &&
-      (bairroSelecionado === "Bairro" || item["BAIRRO"] === bairroSelecionado)
-    );
-
-    mostrarResultados(resultado);
-  });
-});
 
 // ================================
 // MONTA OS CARDS NA TELA COM OS RESULTADOS FILTRADOS
