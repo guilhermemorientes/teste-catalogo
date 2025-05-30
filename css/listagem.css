@@ -22,11 +22,11 @@ h1.loteamentos  { color: #ffcc00; }
 
 .tabs .tab-group {
   display: flex;
-  width: 600px; /* largura alinhada com o campo + botão */
+  width: 600px;
   max-width: 90vw;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .tabs button {
@@ -38,19 +38,22 @@ h1.loteamentos  { color: #ffcc00; }
   background-color: #f5f5f5;
   color: #333;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  box-shadow: inset 0 0 0 rgba(0, 0, 0, 0); /* limpa sombra externa */
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 6px 0 #bbb; /* sombra mais forte pra parecer botão flutuante */
+  position: relative;
+  top: 0;
 }
 
-/* Hover (apenas feedback leve) */
+/* Hover: botão parece subir levemente */
 .tabs button:hover {
-  background-color: #eaeaea;
+  top: -1px;
+  box-shadow: 0 8px 0 #aaa;
 }
 
-/* Pressionado (ativo) */
+/* Ativo: afunda */
 .tabs button.active {
-  transform: translateY(2px);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: 4px;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4);
   color: #fff;
 }
 
@@ -67,7 +70,6 @@ h1.loteamentos  { color: #ffcc00; }
   background-color: #ffcc00;
   color: #000;
 }
-
 
 /* Filtros */
 .filtros {
