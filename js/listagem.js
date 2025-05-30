@@ -100,17 +100,17 @@ function mostrarResultados(lista) {
     clone.querySelector(".insta-image img").src = imagem;
     clone.querySelector(".insta-likes").textContent = `⭐ ${tag}`;
 
-    const captionHTML = `
-      <p style="margin: 10px 0;"></p>
-      📅 Status: ${estagio}<br>
-      📐 Metragem: ${metragem} m²<br>
-      📌 Bairro: ${bairro}<br>
-      🛏 Dormitórios: ${dormitorios}<br>
-      🚽 ${banheiroTexto}<br>
-      🚗 ${garagemTexto}<br>
-      💰 Valor: R$ ${valor}<br>
-      ${apresentacao ? `<a href="https://drive.google.com/uc?export=view&id=${apresentacao}" target="_blank">📄 Apresentação</a><br>` : ''}
-    `;
+const captionHTML = `
+  <p style="margin: 10px 0;"></p>
+  📅 Status: ${estagio}<br>
+  📐 Metragem: ${metragem} m²<br>
+  📌 Bairro: ${bairro}<br>
+  🛌 Dormitórios: ${dormitorios}<br>
+  🚻 Banheiro: ${banheiroNum}<br>
+  🚙 Garagem: ${garagemNum}<br>
+  🏷️ Valor: R$ ${valor}<br>
+  ${apresentacao ? `<a href="https://drive.google.com/uc?export=view&id=${apresentacao}" target="_blank">📄 Apresentação</a><br>` : ''}
+`;
 
     clone.querySelector(".insta-caption").innerHTML = captionHTML;
 
