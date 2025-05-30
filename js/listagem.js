@@ -85,31 +85,27 @@ function mostrarResultados(lista) {
     const bairro = imovel["BAIRRO"] || "-";
     const dormitorios = imovel["DORMITORIOS"] || "-";
 
-    // Banheiros
     const banheiroBruto = imovel["BANHEIROS"] || "0";
     const banheiroNum = parseInt(banheiroBruto) || 0;
-    const banheiroTexto = banheiroNum === 1 ? "1 Banheiro" : `${banheiroNum} Banheiros`;
+    const banheiroTexto = `Banheiro: ${banheiroNum}`;
 
-    // Garagem
     const garagemBruta = imovel["GARAGEM"] || "0";
     const garagemNum = parseInt(garagemBruta) || 0;
-    const garagemTexto = garagemNum > 1 ? `${garagemNum} Garagens` : `${garagemNum} Garagem`;
+    const garagemTexto = `Garagem: ${garagemNum}`;
 
     const valor = parseFloat(imovel["VALOR"] || 0).toLocaleString("pt-BR");
-
     const apresentacao = imovel["APRESENTACAO"];
 
-    // Preencher campos
     clone.querySelector(".insta-user").textContent = nome;
     clone.querySelector(".insta-image img").src = imagem;
     clone.querySelector(".insta-likes").textContent = `⭐ ${tag}`;
 
     const captionHTML = `
       <p style="margin: 10px 0;"></p>
-      📅 Entrega: ${estagio}<br>
+      📅 Status: ${estagio}<br>
       📐 Metragem: ${metragem} m²<br>
-      📍 Bairro: ${bairro}<br>
-      🛏 ${dormitorios} Dormitórios<br>
+      📌 Bairro: ${bairro}<br>
+      🛏 Dormitórios: ${dormitorios}<br>
       🚽 ${banheiroTexto}<br>
       🚗 ${garagemTexto}<br>
       💰 Valor: R$ ${valor}<br>
